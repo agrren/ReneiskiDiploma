@@ -1,0 +1,14 @@
+{
+  "Common": {
+    "Browser": "Chrome",
+    "Urls": {
+      "Page": "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
+    }
+  },
+  "LogIn": {
+    "username": "Admin",
+    "password": "admin123",
+    "wusername": "Age",
+    "wpassword": "aaaaa"
+  }
+}
