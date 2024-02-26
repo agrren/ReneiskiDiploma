@@ -1,38 +1,35 @@
 ﻿using OpenQA.Selenium;
+using OrangeHRMTests.Common.Drivers;
 using OrangeHRMTests.Common.WebElements;
 using OrangeHRMTests.Data;
-using OrangeHRMTests.PageObjects.Elements;
 
 namespace OrangeHRMTests.PageObjects
 {
     public class LoginPage : BasePage
     {
-        private MyWebElement UserNameField = new MyWebElement(By.XPath("//*[@name='username']"));
-        private MyWebElement PassWordField = new MyWebElement(By.XPath("//*[@name='password']"));
-        private MyWebElement InvalidMessageTextElement = new MyWebElement(By.XPath("//p[@class='oxd-text oxd-text--p oxd-alert-content-text']"));
-        private MyWebElement LogoutButton = new MyWebElement(By.XPath("//a[@href='/web/index.php/auth/logout']"));
-        private MyWebElement ForgotPasswordButton = new MyWebElement(By.XPath("//*[text()='Forgot your password? ']"));
-        private MyWebElement ResetPasswordMessageTextElement = new MyWebElement(By.XPath("//h6[@class='oxd-text oxd-text--h6 orangehrm-forgot-password-title']"));
+        private MyWebElement UserNameField = new MyWebElement(By.XPath("//*[contains(@class, 'form-row')]//*[contains(@name, 'username')]"));
+        private MyWebElement PassWordField = new MyWebElement(By.XPath("//*[contains(@class, 'form-row')]//*[contains(@name, 'password')]"));
+        private MyWebElement InvalidMessageTextElement = new MyWebElement(By.XPath("//*[contains(@class, 'login-error')]//*[contains(@class, 'alert-content-text')]"));
+        private MyWebElement ForgotPasswordButton = new MyWebElement(By.XPath("//*[contains(@class, 'login-forgot')]/p"));
+        private MyWebElement ResetPasswordMessageTextElement = new MyWebElement(By.XPath("//*[contains(@class, 'forgot-password-title')]"));
 
-        public string GetCurrentPageUrl() => Driver.Url;
+        public string GetCurrentPageUrl() => WebDriverFactory.Driver.Url;
 
-        public void EnterValidUsername() => UserNameField.SendKeys(TestSettings.username);
+        public void EnterValidUsername() => UserNameField.SendKeys(TestSettings.Username);
 
-        public void EnterValidPassword() => PassWordField.SendKeys(TestSettings.password);
+        public void EnterValidPassword() => PassWordField.SendKeys(TestSettings.Password);
 
-        public void ClickLoginButton() => Buttons.ClickSaveButton();
-
-        public void ClickLogout() => LogoutButton.Click();
+        public void ClickLoginButton() => BasePage.ClickSaveButton();
 
         public void ClickForgotPassword() => ForgotPasswordButton.Click();
 
-        public void ClickResetPasswordButton() => Buttons.ClickSaveButton();
+        public void ClickResetPasswordButton() => BasePage.ClickSaveButton();
 
-        public void EnterInvalidUsername() => UserNameField.SendKeys(TestSettings.wusername);
+        public void EnterInvalidUsername() => UserNameField.SendKeys(TestSettings.UnvalidUsername);
 
-        public void EnterInvalidPassword() => PassWordField.SendKeys(TestSettings.wpassword);
+        public void EnterInvalidPassword() => PassWordField.SendKeys(TestSettings.UnvalidPassword);
 
-        public void EnterUserNameTextBoxElement() => Fields.EnterValueInInputTextField("Username", "111admin");
+        public void EnterUserNameTextBoxElement() => BasePage.EnterValueInInputTextField("Username", "111admin");
 
         public string ReturnInvalidMessageTextResult() => InvalidMessageTextElement.Text;
 

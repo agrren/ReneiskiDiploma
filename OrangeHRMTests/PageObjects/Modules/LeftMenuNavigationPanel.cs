@@ -1,31 +1,30 @@
 ﻿using OpenQA.Selenium;
 using OrangeHRMTests.Common.Drivers;
 using OrangeHRMTests.Common.WebElements;
+using System;
 
 namespace OrangeHRMTests.PageObjects.Modules
 {
     public class LeftMenuNavigationPanel
     {
-        private MyWebElement AdminMenuItem = new MyWebElement(By.XPath("//a[@href='/web/index.php/admin/viewAdminModule']"));
-        private MyWebElement DashboardMenuItem = new MyWebElement(By.XPath("//a[@href='/web/index.php/dashboard/index']"));
-        private MyWebElement PIMMenuItem = new MyWebElement(By.XPath("//a[@href='/web/index.php/pim/viewPimModule']"));
         private MyWebElement SearchInputField = new MyWebElement(By.XPath("//input[@placeholder='Search']"));
         private MyWebElement SearchResultElement = new MyWebElement(By.XPath("//span[@class='oxd-text oxd-text--span oxd-main-menu-item--name']"));
-        private MyWebElement PerformanceMenuItem = new MyWebElement(By.XPath("//a[@href='/web/index.php/performance/viewPerformanceModule']"));
-        private MyWebElement RecruitmentMenuItem = new MyWebElement(By.XPath("//a[@href='/web/index.php/recruitment/viewRecruitmentModule']"));
-        private MyWebElement LeaveMenuItem = new MyWebElement(By.XPath("//a[@href='/web/index.php/leave/viewLeaveModule']"));
 
-        public void GoToAdminPage() => AdminMenuItem.Click();
+        public string LeftMenuItem = "//a[@href='/web/index.php/{0}']";
 
-        public void GoToDashboardPage() => DashboardMenuItem.Click();
+        public void GoToLeftMenuItem(string value) => new MyWebElement(By.XPath(string.Format(LeftMenuItem, value))).Click();
 
-        public void GoToPIMPage() => PIMMenuItem.Click();
+        public void GoToAdminPage() => GoToLeftMenuItem("admin/viewAdminModule");
 
-        public void GoToPerformancePage() => PerformanceMenuItem.Click();
+        public void GoToDashboardPage() => GoToLeftMenuItem("dashboard/index");
 
-        public void GoToRecruitmentPage() => RecruitmentMenuItem.Click();
+        public void GoToPIMPage() => GoToLeftMenuItem("pim/viewPimModule");
 
-        public void GoToLeavePage() => LeaveMenuItem.Click();
+        public void GoToPerformancePage() => GoToLeftMenuItem("performance/viewPerformanceModule");
+
+        public void GoToRecruitmentPage() => GoToLeftMenuItem("recruitment/viewRecruitmentModule");
+
+        public void GoToLeavePage() => GoToLeftMenuItem("leave/viewLeaveModule");
 
         public void EnterValueToSearchInputField(string value) => SearchInputField.SendKeys(value);
 

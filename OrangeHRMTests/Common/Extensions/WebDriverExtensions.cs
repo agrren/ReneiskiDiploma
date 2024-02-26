@@ -20,9 +20,5 @@ namespace OrangeHRMTests.Common.Extensions
         }
 
         public static IWebElement GetWebElementWhenExist(this IWebDriver driver, By by) => driver.GetWebDriverWait().Until(drv => drv.FindElement(by));
-
-        public static void SwitchToTheLastWindow() => WebDriverFactory.Driver.SwitchTo().Window(WebDriverFactory.Driver.WindowHandles.ToList().Last());
-
-        public static void SwitchToTheFirstWindow() => WebDriverFactory.Driver.SwitchTo().Window(WebDriverFactory.Driver.WindowHandles.ToList().First());
     }
 }

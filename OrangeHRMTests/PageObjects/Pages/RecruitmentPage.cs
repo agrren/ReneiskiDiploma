@@ -1,37 +1,34 @@
 ﻿using OpenQA.Selenium;
 using OrangeHRMTests.Common.Extensions.ExtensionMethods;
 using OrangeHRMTests.Common.WebElements;
-using OrangeHRMTests.PageObjects.Elements;
+using OrangeHRMTests.PageObjects.Modules;
 
 namespace OrangeHRMTests.PageObjects.Pages
 {
     public class RecruitmentPage : BasePage
     {
-        private MyWebElement HiringManagerListFirstPosition = new MyWebElement(By.XPath("//div[@role='listbox']/div[1]/span"));
-        private MyWebElement VacanciesText = new MyWebElement(By.XPath("//h5[@class='oxd-text oxd-text--h5 oxd-table-filter-title'][text()='Vacancies']"));
+        private MyWebElement EditVacanciesText = new MyWebElement(By.XPath("//*[contains(@class, 'container')]//*[contains(@class, 'main-title')][text()='Edit Vacancy']"));
 
         public string DropDownListJobTitle = "//div[@class='oxd-select-wrapper']/div[2]//*[contains(text(),'{0}')]";
         public string FullCandidateName = "//label[text()='Full Name']//ancestor::div[1]//following-sibling::div[1]//input[@name='{0}']";
 
         public void ClickVacanciesButton() => TopbarMenu.ClickTopbarMenuButtonByName("Vacancies");
 
-        public string VacanciesTextResult() => VacanciesText.Text;
+        public string GetVacanciesTextResult() => GenericPages.PIMPage.ImployeeInformationText.Text;
+
+        public string GetEditVacanciesTextResult() => EditVacanciesText.Text;
 
         public void ClickCandidatesButton() => TopbarMenu.ClickTopbarMenuButtonByName("Candidates");
 
-        public void ClickJobTitleDropdownArrowButton() => Buttons.ClickRequieredDropDownListArrowButtonByName("Job Title");
+        public void ClickJobTitleDropdownArrowButton() => ClickDropDownListArrowButtonByName("Job Title");
 
-        public void ClickCandidateNameFirstPosition() => HiringManagerListFirstPosition.Click();
+        public void EnterVacancyName() => EnterValueInInputTextField("Vacancy Name", "111");
 
-        public void ClickHiringManagerListFirstPosition() => HiringManagerListFirstPosition.Click();
+        public void EnterHiringManager() => EnterValueInInputTextField("Hiring Manager", "a");
 
-        public void EnterVacancyName() => Fields.EnterValueInInputTextField("Vacancy Name", "111");
+        public void EnterEmail() => EnterValueInInputTextField("Email", "111@gmail.com");
 
-        public void EnterHiringManager() => Fields.EnterValueInInputTextField("Hiring Manager", "a");
-
-        public void EnterEmail() => Fields.EnterValueInInputTextField("Email", "111@gmail.com");
-
-        public void EnterCandidateName() => Fields.EnterValueInInputTextField("Candidate Name", "111");
+        public void EnterCandidateName() => EnterValueInInputTextField("Candidate Name", "111");
 
         public void EnterCandidateName(string field, string value) => new MyWebElement(By.XPath(string.Format(FullCandidateName, field))).SendKeys(value);
 

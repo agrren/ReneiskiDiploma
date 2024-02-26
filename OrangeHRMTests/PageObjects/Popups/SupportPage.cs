@@ -1,14 +1,14 @@
 ﻿using OpenQA.Selenium;
 using OrangeHRMTests.Common.WebElements;
+using OrangeHRMTests.PageObjects.Modules;
 
 namespace OrangeHRMTests.PageObjects.Popups
 {
     public class SupportPage : BasePage
     {
-        private MyWebElement SupportButton = new MyWebElement(By.XPath("//a[@href='/web/index.php/help/support']"));
-        private MyWebElement SupportTitleTextElement = new MyWebElement(By.XPath("//h6[@class='oxd-text oxd-text--h6 orangehrm-main-title']"));
+        private MyWebElement SupportTitleTextElement = new MyWebElement(By.XPath("//*[contains(@class, 'card-container')]//*[contains(@class, 'main-title')]"));
 
-        public void ClickSupport() => SupportButton.Click();
+        public void ClickSupport() => TopbarMenu.ClickUserDropdownItemByName("Support");
 
         public string ReturnSupportTitleTextResult() => SupportTitleTextElement.Text;
     }

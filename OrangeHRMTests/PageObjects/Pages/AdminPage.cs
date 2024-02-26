@@ -1,21 +1,15 @@
 ﻿using OpenQA.Selenium;
 using OrangeHRMTests.Common.Extensions.ExtensionMethods;
 using OrangeHRMTests.Common.WebElements;
-using OrangeHRMTests.PageObjects.Elements;
+using OrangeHRMTests.PageObjects.Modules;
 
 namespace OrangeHRMTests.PageObjects.Pages
 {
     public class AdminPage : BasePage
     {
-        private MyWebElement AdminPageHeaderElementPartOne = new MyWebElement(By.XPath("//h6[@class='oxd-text oxd-text--h6 oxd-topbar-header-breadcrumb-module']"));
-        private MyWebElement AdminPageHeaderElementPartTwo = new MyWebElement(By.XPath("//h6[@class='oxd-text oxd-text--h6 oxd-topbar-header-breadcrumb-level']"));
-        private MyWebElement SystemUserTableHeaderElement = new MyWebElement(By.XPath("//h5[@class='oxd-text oxd-text--h5 oxd-table-filter-title']"));
-        private MyWebElement UsersDropdownElement = new MyWebElement(By.XPath("//ul[@class='oxd-dropdown-menu']"));
-        private MyWebElement JobTitleDropdownElement = new MyWebElement(By.XPath("//ul[@class='oxd-dropdown-menu']//*[contains(text(),'Job Titles')]"));
-        private MyWebElement EditNationalityNameTextBoxElement = new MyWebElement(By.XPath("//div[@class='oxd-input-group oxd-input-field-bottom-space']//input"));
-        private MyWebElement JobTitlesText = new MyWebElement(By.XPath("//h6[@class='oxd-text oxd-text--h6 orangehrm-main-title'][text()='Job Titles']"));
-        private MyWebElement NationalitiesText = new MyWebElement(By.XPath("//h6[@class='oxd-text oxd-text--h6 orangehrm-main-title'][text()='Nationalities']"));
-        private MyWebElement EditNationalityText = new MyWebElement(By.XPath("//h6[@class='oxd-text oxd-text--h6 orangehrm-main-title'][text()='Edit Nationality']"));
+        public MyWebElement SystemUserTableHeaderElement = new MyWebElement(By.XPath("//*[contains(@class, 'table-filter')]//*[contains(@class, 'filter-title')]"));
+        private MyWebElement DropdownElement = new MyWebElement(By.XPath("//ul[@class='oxd-dropdown-menu']//*[contains(@role, 'menuitem')]"));
+        private MyWebElement EditNationalityNameTextBoxElement = new MyWebElement(By.XPath("//*[contains(@class, 'input-field')]//*[contains(text(), 'Name')]//ancestor::div[1]//following-sibling::div[1]//input"));
 
         public void ClickUserManagementDropdownButton() => TopbarMenu.ClickTopbarMenuButtonByName("User Management ");
 
@@ -27,47 +21,43 @@ namespace OrangeHRMTests.PageObjects.Pages
 
         public void ClickNationalitiesButton() => TopbarMenu.ClickTopbarMenuButtonByName("Nationalities");
 
-        public void ClickUserRoleDropdownArrowButton() => Buttons.ClickRequieredDropDownListArrowButtonByName("User Role");
+        public void ClickUserRoleDropdownArrowButton() => ClickDropDownListArrowButtonByName("User Role");
 
-        public void ClickStatusDropdownArrowButton() => Buttons.ClickRequieredDropDownListArrowButtonByName("Status");
+        public void ClickStatusDropdownArrowButton() => ClickDropDownListArrowButtonByName("Status");
 
-        public void ClearNationalityName() 
+        public void ClearNationalityName()
         {
             MyWebElement.Waiter();
-            Fields.EnterValueInInputTextField("Name", Keys.Control + "a" + Keys.Delete);
+            EnterValueInInputTextField("Name", Keys.Control + "a" + Keys.Delete);
         }
 
-        public void EnterNationalityName() => Fields.EnterValueInInputTextField("Name", "111");
+        public void EnterNationalityName() => EnterValueInInputTextField("Name", "111");
 
         public void EnterNationalityNameBack(string value) => EditNationalityNameTextBoxElement.SendKeys(value);
 
-        public void EnterJobTitleName() => Fields.EnterValueInInputTextField("Job Title", "111");
+        public void EnterJobTitleName() => EnterValueInInputTextField("Job Title", "111");
 
-        public void EnterUserNameTextBoxElement() => Fields.EnterValueInInputTextField("Username", "111admin");
+        public void EnterUserNameTextBoxElement() => EnterValueInInputTextField("Username", "111admin");
 
-        public void EnterPasswordTextBoxElement() => Fields.EnterValueInInputTextField("Password", "qwerty123");
+        public void EnterPasswordTextBoxElement() => EnterValueInInputTextField("Password", "qwerty123");
 
-        public void EnterConfirmPasswordTextBoxElement() => Fields.EnterValueInInputTextField("Confirm Password", "qwerty123");
+        public void EnterConfirmPasswordTextBoxElement() => EnterValueInInputTextField("Confirm Password", "qwerty123");
 
-        public string ReturnAdminPageHeaderPartOneTextResult() => AdminPageHeaderElementPartOne.Text;
+        public string GetSystemUserTableHeaderTextResult() => SystemUserTableHeaderElement.Text;
 
-        public string ReturnAdminPageHeaderPartTwoTextResult() => AdminPageHeaderElementPartTwo.Text;
+        public string GetUsersDropdownElementText() => DropdownElement.Text;
 
-        public string ReturnSystemUserTableHeaderTextResult() => SystemUserTableHeaderElement.Text;
+        public string GetJobTitleDropdownElementText() => DropdownElement.Text;
 
-        public string ReturnUsersDropdownElementText() => UsersDropdownElement.Text;
+        public string GetEmployeeNameTableTextElement() => ReturnValueOfTextFieldByName("Employee Name");
 
-        public string ReturnJobTitleDropdownElementText() => JobTitleDropdownElement.Text;
+        public string GetJobTitleNameTextResult() => ReturnValueOfTextFieldByName("Job Titles");
 
-        public string ReturnEmployeeNameTableTextElement() => Tables.ReturnValueOfTextFieldByName("Employee Name");
+        public string GetJobTitlesText() => MainTitleText.Text;
 
-        public string ReturnJobTitleNameTextResult() => Tables.ReturnValueOfTextFieldByName("Job Titles");
+        public string GetNationalitiesText() => MainTitleText.Text;
 
-        public string ReturnJobTitlesText() => JobTitlesText.Text;
-
-        public string ReturnNationalitiesText() => NationalitiesText.Text;
-
-        public string ReturnEditNationalitiyText() => EditNationalityText.Text;
+        public string GetEditNationalitiyText() => MainTitleText.Text;
 
         public void ChooseUserRole() => DropdownExtension.ClickDropdownList("Admin");
 

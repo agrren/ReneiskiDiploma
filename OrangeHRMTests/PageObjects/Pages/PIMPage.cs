@@ -1,43 +1,39 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework.Legacy;
+using OpenQA.Selenium;
 using OrangeHRMTests.Common.Extensions.ExtensionMethods;
 using OrangeHRMTests.Common.WebElements;
-using OrangeHRMTests.PageObjects.Elements;
+using OrangeHRMTests.PageObjects.Modules;
 
 namespace OrangeHRMTests.PageObjects.Pages
 {
     public class PIMPage : BasePage
     {
-        private MyWebElement SaveOneButton = new MyWebElement(By.XPath("//button[@type='submit']"));
-        private MyWebElement SaveTwoButton = new MyWebElement(By.XPath("//form[@class='oxd-form']/div[5]/button"));
-        private MyWebElement CreatedEmployeeListFirstPosition = new MyWebElement(By.XPath("//div[@role='listbox']/div[1]/span"));
-        private MyWebElement PersonalDetailsHeader = new MyWebElement(By.XPath("//h6[@class='oxd-text oxd-text--h6 orangehrm-main-title']"));
-        private MyWebElement AddedCustomFieldName = new MyWebElement(By.XPath("//h6[text()='Custom Fields']//following-sibling::form[1]//label[@class='oxd-label']"));
-        private MyWebElement QualificationsButton = new MyWebElement(By.XPath("//*[text()='Qualifications']"));
-        private MyWebElement AddSkillsButton = new MyWebElement(By.XPath("//*[text()='Skills']//following-sibling::button"));
-        private MyWebElement SkillsTableTrashButton = new MyWebElement(By.XPath("//*[text()='Skills']//ancestor::div[2]//following-sibling::div[2]" +
-            "//i[@class='oxd-icon bi-trash']"));
-        private MyWebElement ImployeeInformationText = new MyWebElement(By.XPath("//h5[@class='oxd-text oxd-text--h5 oxd-table-filter-title']" +
-            "[text()='Employee Information']"));
-        private MyWebElement CustomFieldsText = new MyWebElement(By.XPath("//h6[@class='oxd-text oxd-text--h6 orangehrm-main-title'][text()='Custom Fields']"));
-        private MyWebElement NoRecordsFoundText = new MyWebElement(By.XPath("//span[@class='oxd-text oxd-text--span'][text()='No Records Found']"));
+        private MyWebElement SaveCustomFieldButton = new MyWebElement(By.XPath("//*[contains(@class, 'custom-fields')]//*[contains(@type, 'submit')]"));
+        private MyWebElement DropdownListFirstPosition = new MyWebElement(By.XPath("//*[contains(@role, 'listbox')]//span"));
+        private MyWebElement PersonalDetailsHeader = new MyWebElement(By.XPath("//*[contains(@class, 'container')]//*[contains(@class, 'main-title')][text()='Personal Details']"));
+        private MyWebElement AddedCustomFieldName = new MyWebElement(By.XPath("//*[text()='Custom Fields']//following-sibling::form[1]//label"));
+        private MyWebElement QualificationsButton = new MyWebElement(By.XPath("//*[contains(@class, 'edit-employee-navigation')]//*[text()='Qualifications']"));
+        private MyWebElement AddSkillsButton = new MyWebElement(By.XPath("//*[contains(@class, 'edit-employee-content')]//*[text()='Skills']//following-sibling::button"));
+        private MyWebElement SkillsTableTrashButton = new MyWebElement(By.XPath("//*[text()='Skills']//ancestor::div[2]//following-sibling::div[2]//*[contains(@class, 'bi-trash')]"));
+        public MyWebElement ImployeeInformationText = new MyWebElement(By.XPath("//*[contains(@class, 'table-filter')]//*[contains(@class, 'table-filter-title')]"));
 
-        public string FullUserName = "//label[text()='Employee Full Name']//ancestor::div[1]//following-sibling::div[1]//input[@name='{0}']";
+        public string FullUserName = "//*[contains(@class, 'input-group')]//*[text()='Employee Full Name']//ancestor::div//following-sibling::div//input[@name='{0}']";
 
-        public string ReturnFirstAndMiddleNameTextResult() => Tables.GetCellText("First (& Middle) Name");
+        public string GetFirstAndMiddleNameTextResult() => GetCellText("First (& Middle) Name");
 
-        public string ReturnLastNameTextResult() => Tables.GetCellText("Last Name");
+        public string GetLastNameTextResult() => GetCellText("Last Name");
 
         public void EnterUserName(string field, string value) => new MyWebElement(By.XPath(string.Format(FullUserName, field))).SendKeys(value);
 
         public void ChoseScreen()
         {
-            Buttons.ClickRequieredDropDownListArrowButtonByName("Screen");
+            ClickDropDownListArrowButtonByName("Screen");
             DropdownExtension.ClickDropdownList("Personal Details");
         }
 
         public void ChoseType()
         {
-            Buttons.ClickRequieredDropDownListArrowButtonByName("Type");
+            ClickDropDownListArrowButtonByName("Type");
             DropdownExtension.ClickDropdownList("Text or Number");
         }
 
@@ -47,11 +43,11 @@ namespace OrangeHRMTests.PageObjects.Pages
 
         public void ClickCustomFieldsButton() => TopbarMenu.ClickTopbarMenuButtonByName("Custom Fields");
 
-        public void ClickCreatedEmployeeFirstPosition() => CreatedEmployeeListFirstPosition.Click();
+        public void ClickDropdownListFirstPosition() => DropdownListFirstPosition.Click();
 
         public void ClickUserName(string field) => new MyWebElement(By.XPath(string.Format(FullUserName, field))).Click();
 
-        public void ClickEmployeeLastName() => Tables.ClickTableCellByName("Last Name");
+        public void ClickEmployeeLastName() => ClickTableCellByName("Last Name");
 
         public void ClickQualificationsButton() => QualificationsButton.Click();
 
@@ -76,30 +72,28 @@ namespace OrangeHRMTests.PageObjects.Pages
             EnterUserName("lastName", "333");
         }
 
-        public void EnterCreatedEmployeeNameTextBoxElement() => Fields.EnterValueInInputTextField("Employee Name", "111 222");
+        public void EnterCreatedEmployeeNameTextBoxElement() => EnterValueInInputTextField("Employee Name", "111 222");
 
-        public void EnterUnvalidEmployeeNameTextBoxElement() => Fields.EnterValueInInputTextField("Employee Name", "123456");
+        public void EnterUnvalidEmployeeNameTextBoxElement() => EnterValueInInputTextField("Employee Name", "123456");
 
-        public void EnterFieldNameTextBoxElement() => Fields.EnterValueInInputTextField("Field Name", "111");
+        public void EnterFieldNameTextBoxElement() => EnterValueInInputTextField("Field Name", "111");
 
-        public void EnterCreatedCustomFieldValueTextBoxElement() => Fields.EnterValueInInputTextField("111", "111");
+        public void EnterCreatedCustomFieldValueTextBoxElement() => EnterValueInInputTextField("111", "111");
 
-        public void ClickSaveOneButton() => SaveOneButton.Click();
+        public void ClickSaveCustomFieldButton() => SaveCustomFieldButton.Click();
 
-        public void ClickSaveTwoButton() => SaveTwoButton.Click();
+        public void ClearEmployeeNameTextBoxElement() => EnterValueInInputTextField("Employee Name", Keys.Control + "a" + Keys.Delete);
 
-        public void ClearEmployeeNameTextBoxElement() => Fields.EnterValueInInputTextField("Employee Name", Keys.Control + "a" + Keys.Delete);
+        public string GetPersonalDetailsHeaderTextElement() => PersonalDetailsHeader.Text;
 
-        public string ReturnPersonalDetailsHeaderTextElement() => PersonalDetailsHeader.Text;
+        public string GetAddedCustomFieldNameTextElement() => AddedCustomFieldName.Text;
 
-        public string ReturnAddedCustomFieldNameTextElement() => AddedCustomFieldName.Text;
+        public string GetImployeeInformationText() => ImployeeInformationText.Text;
 
-        public string ReturnImployeeInformationText() => ImployeeInformationText.Text;
+        public string GetCustomFieldsText() => MainTitleText.Text;
 
-        public string ReturnCustomFieldsText() => CustomFieldsText.Text;
+        public string GetNoRecordsFoundText() => PopUpMessageTextElement.Text;
 
-        public string ReturnNoRecordsFoundText() => NoRecordsFoundText.Text;
-
-        public void ClearCreatedCustomFieldTextBoxElement() => Fields.EnterValueInInputTextField("111", Keys.Control + "a" + Keys.Delete);
+        public void ClearCreatedCustomFieldTextBoxElement() => EnterValueInInputTextField("111", Keys.Control + "a" + Keys.Delete);
     }
 }

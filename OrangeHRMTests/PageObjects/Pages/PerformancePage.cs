@@ -1,5 +1,5 @@
 ﻿using OrangeHRMTests.Common.Extensions.ExtensionMethods;
-using OrangeHRMTests.PageObjects.Elements;
+using OrangeHRMTests.PageObjects.Modules;
 
 namespace OrangeHRMTests.PageObjects.Pages
 {
@@ -9,11 +9,11 @@ namespace OrangeHRMTests.PageObjects.Pages
 
         public void ClickKPIsButton() => TopbarMenu.ClickTopbarMenuButtonByName("KPIs");
 
-        public void EnterKeyPerformanceIndicator() => Fields.EnterValueInInputTextField("Key Performance Indicator", "111");
+        public void EnterKeyPerformanceIndicator() => EnterValueInInputTextField("Key Performance Indicator", "111");
 
-        public void EnterKeyMinimumRating() => Fields.EnterValueInInputTextField("Minimum Rating", "1");
+        public void EnterKeyMinimumRating() => EnterValueInInputTextField("Minimum Rating", "1");
 
-        public void ClickJobTitleDropdownArrowButton() => Buttons.ClickRequieredDropDownListArrowButtonByName("Job Title");
+        public void ClickJobTitleDropdownArrowButton() => ClickDropDownListArrowButtonByName("Job Title");
 
         public void ChooseJobTitle() => DropdownExtension.ClickDropdownList("IT Manager");
     }
