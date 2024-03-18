@@ -1,13 +1,17 @@
-﻿using NUnit.Framework.Legacy;
-using OpenQA.Selenium;
-using OrangeHRMTests.Common.Extensions.ExtensionMethods;
+﻿using OpenQA.Selenium;
 using OrangeHRMTests.Common.WebElements;
+using OrangeHRMTests.Data.Constants;
 using OrangeHRMTests.PageObjects.Modules;
 
 namespace OrangeHRMTests.PageObjects.Pages
 {
     public class PIMPage : BasePage
     {
+        const string FirstName = "111";
+        const string MiddleName = "222";
+        const string LastName = "333";
+        public const string FullUserName = "//*[contains(@class, 'input-group')]//*[text()='Employee Full Name']//ancestor::div//following-sibling::div//input[@name='{0}']";
+
         private MyWebElement SaveCustomFieldButton = new MyWebElement(By.XPath("//*[contains(@class, 'custom-fields')]//*[contains(@type, 'submit')]"));
         private MyWebElement DropdownListFirstPosition = new MyWebElement(By.XPath("//*[contains(@role, 'listbox')]//span"));
         private MyWebElement PersonalDetailsHeader = new MyWebElement(By.XPath("//*[contains(@class, 'container')]//*[contains(@class, 'main-title')][text()='Personal Details']"));
@@ -15,39 +19,29 @@ namespace OrangeHRMTests.PageObjects.Pages
         private MyWebElement QualificationsButton = new MyWebElement(By.XPath("//*[contains(@class, 'edit-employee-navigation')]//*[text()='Qualifications']"));
         private MyWebElement AddSkillsButton = new MyWebElement(By.XPath("//*[contains(@class, 'edit-employee-content')]//*[text()='Skills']//following-sibling::button"));
         private MyWebElement SkillsTableTrashButton = new MyWebElement(By.XPath("//*[text()='Skills']//ancestor::div[2]//following-sibling::div[2]//*[contains(@class, 'bi-trash')]"));
-        public MyWebElement ImployeeInformationText = new MyWebElement(By.XPath("//*[contains(@class, 'table-filter')]//*[contains(@class, 'table-filter-title')]"));
-
-        public string FullUserName = "//*[contains(@class, 'input-group')]//*[text()='Employee Full Name']//ancestor::div//following-sibling::div//input[@name='{0}']";
-
-        public string GetFirstAndMiddleNameTextResult() => GetCellText("First (& Middle) Name");
-
-        public string GetLastNameTextResult() => GetCellText("Last Name");
+        private MyWebElement ImployeeInformationText = new MyWebElement(By.XPath("//*[contains(@class, 'table-filter')]//*[contains(@class, 'table-filter-title')]"));
 
         public void EnterUserName(string field, string value) => new MyWebElement(By.XPath(string.Format(FullUserName, field))).SendKeys(value);
 
         public void ChoseScreen()
         {
-            ClickDropDownListArrowButtonByName("Screen");
-            DropdownExtension.ClickDropdownList("Personal Details");
+            const string PersonalDetailsDropDownFieldValue = "Personal Details";
+
+            ClickDropDownListArrowButtonByName(DropDownFieldsNames.ScreenDropDownFieldName);
+            MyWebElement.SelectValueFromOrangeDropdownList(PersonalDetailsDropDownFieldValue);
         }
 
         public void ChoseType()
         {
-            ClickDropDownListArrowButtonByName("Type");
-            DropdownExtension.ClickDropdownList("Text or Number");
+            const string TextOrNumberDropDownFieldValue = "Text or Number";
+
+            ClickDropDownListArrowButtonByName(DropDownFieldsNames.TypeDropDownFieldName);
+            MyWebElement.SelectValueFromOrangeDropdownList(TextOrNumberDropDownFieldValue);
         }
-
-        public void ClickEmployeeListButton() => TopbarMenu.ClickTopbarMenuButtonByName("Employee List");
-
-        public void ClickConfugurationButton() => TopbarMenu.ClickTopbarMenuButtonByName("Configuration ");
-
-        public void ClickCustomFieldsButton() => TopbarMenu.ClickTopbarMenuButtonByName("Custom Fields");
 
         public void ClickDropdownListFirstPosition() => DropdownListFirstPosition.Click();
 
         public void ClickUserName(string field) => new MyWebElement(By.XPath(string.Format(FullUserName, field))).Click();
-
-        public void ClickEmployeeLastName() => ClickTableCellByName("Last Name");
 
         public void ClickQualificationsButton() => QualificationsButton.Click();
 
@@ -57,43 +51,27 @@ namespace OrangeHRMTests.PageObjects.Pages
 
         public void ClearFullUserName()
         {
-            ClickUserName("firstName");
-            EnterUserName("firstName", Keys.Control + "a" + Keys.Delete);
-            ClickUserName("middleName");
-            EnterUserName("middleName", Keys.Control + "a" + Keys.Delete);
-            ClickUserName("lastName");
-            EnterUserName("lastName", Keys.Control + "a" + Keys.Delete);
+            ClickUserName(InputFieldsNames.FirstNameInputFieldName);
+            EnterUserName(InputFieldsNames.FirstNameInputFieldName, Keys.Control + "a" + Keys.Delete);
+            ClickUserName(InputFieldsNames.MiddleNameInputFieldName);
+            EnterUserName(InputFieldsNames.MiddleNameInputFieldName, Keys.Control + "a" + Keys.Delete);
+            ClickUserName(InputFieldsNames.LastNameInputFieldName);
+            EnterUserName(InputFieldsNames.LastNameInputFieldName, Keys.Control + "a" + Keys.Delete);
         }
 
         public void EnterFullUserName()
         {
-            EnterUserName("firstName", "111");
-            EnterUserName("middleName", "222");
-            EnterUserName("lastName", "333");
+            EnterUserName(InputFieldsNames.FirstNameInputFieldName, FirstName);
+            EnterUserName(InputFieldsNames.MiddleNameInputFieldName, MiddleName);
+            EnterUserName(InputFieldsNames.LastNameInputFieldName, LastName);
         }
 
-        public void EnterCreatedEmployeeNameTextBoxElement() => EnterValueInInputTextField("Employee Name", "111 222");
-
-        public void EnterUnvalidEmployeeNameTextBoxElement() => EnterValueInInputTextField("Employee Name", "123456");
-
-        public void EnterFieldNameTextBoxElement() => EnterValueInInputTextField("Field Name", "111");
-
-        public void EnterCreatedCustomFieldValueTextBoxElement() => EnterValueInInputTextField("111", "111");
-
         public void ClickSaveCustomFieldButton() => SaveCustomFieldButton.Click();
-
-        public void ClearEmployeeNameTextBoxElement() => EnterValueInInputTextField("Employee Name", Keys.Control + "a" + Keys.Delete);
 
         public string GetPersonalDetailsHeaderTextElement() => PersonalDetailsHeader.Text;
 
         public string GetAddedCustomFieldNameTextElement() => AddedCustomFieldName.Text;
 
         public string GetImployeeInformationText() => ImployeeInformationText.Text;
-
-        public string GetCustomFieldsText() => MainTitleText.Text;
-
-        public string GetNoRecordsFoundText() => PopUpMessageTextElement.Text;
-
-        public void ClearCreatedCustomFieldTextBoxElement() => EnterValueInInputTextField("111", Keys.Control + "a" + Keys.Delete);
     }
 }

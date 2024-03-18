@@ -3,7 +3,7 @@ using OrangeHRMTests.Common.Drivers;
 using OrangeHRMTests.Common.WebElements;
 using OrangeHRMTests.Data;
 
-namespace OrangeHRMTests.PageObjects
+namespace OrangeHRMTests.PageObjects.Pages
 {
     public class LoginPage : BasePage
     {
@@ -15,30 +15,24 @@ namespace OrangeHRMTests.PageObjects
 
         public string GetCurrentPageUrl() => WebDriverFactory.Driver.Url;
 
-        public void EnterValidUsername() => UserNameField.SendKeys(TestSettings.Username);
+        public void InputUserName(string value) => UserNameField.SendKeys(value);
 
-        public void EnterValidPassword() => PassWordField.SendKeys(TestSettings.Password);
+        public void InputPassword(string value) => PassWordField.SendKeys(value);
 
-        public void ClickLoginButton() => BasePage.ClickSaveButton();
+        public void ClickLoginButton() => ClickSaveButton();
 
         public void ClickForgotPassword() => ForgotPasswordButton.Click();
 
-        public void ClickResetPasswordButton() => BasePage.ClickSaveButton();
+        public void ClickResetPasswordButton() => ClickSaveButton();
 
-        public void EnterInvalidUsername() => UserNameField.SendKeys(TestSettings.UnvalidUsername);
+        public string GetInvalidMessageTextResult() => InvalidMessageTextElement.Text;
 
-        public void EnterInvalidPassword() => PassWordField.SendKeys(TestSettings.UnvalidPassword);
-
-        public void EnterUserNameTextBoxElement() => BasePage.EnterValueInInputTextField("Username", "111admin");
-
-        public string ReturnInvalidMessageTextResult() => InvalidMessageTextElement.Text;
-
-        public string ReturnResetPasswordMessageTextResult() => ResetPasswordMessageTextElement.Text;
+        public string GetResetPasswordMessageTextResult() => ResetPasswordMessageTextElement.Text;
 
         public void LogInToOrangeCRM()
         {
-            EnterValidUsername();
-            EnterValidPassword();
+            InputUserName(TestSettings.Username);
+            InputPassword(TestSettings.Password);
             ClickLoginButton();
         }
     }

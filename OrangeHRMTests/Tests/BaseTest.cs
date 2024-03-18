@@ -4,16 +4,14 @@ using OpenQA.Selenium;
 using OrangeHRMTests.Common.Drivers;
 using OrangeHRMTests.Common.WebElements;
 using OrangeHRMTests.Data;
+using OrangeHRMTests.Data.Constants;
 using OrangeHRMTests.PageObjects;
+using OrangeHRMTests.PageObjects.Modules;
 
 namespace OrangeHRMTests.Tests
 {
     public class BaseTest
     {
-        //private MyWebElement CreatedEmployeeListFirstPosition = new MyWebElement(By.XPath("//div[@role='listbox']/div[1]/span"));
-        private MyWebElement EmployeeNameHintedTextBoxElement = new MyWebElement(By.XPath("//label[@class='oxd-label'][text()='Employee Name']//ancestor::div[1]" +
-            "//following-sibling::div[1]//input"));
-
         public BaseTest()
         {
         }
@@ -22,7 +20,7 @@ namespace OrangeHRMTests.Tests
         public void OneTimeSetup()
         {
             WebDriverFactory.InitializeDriver();
-            GenericPages.BaseTest.GoToLoginPage();
+            GoToLoginPage();
             GenericPages.LoginPage.LogInToOrangeCRM();
         }
 
@@ -34,37 +32,45 @@ namespace OrangeHRMTests.Tests
 
         public void CreateEmployee()
         {
-            GenericPages.BasePage.LeftMenuNavigationPanel.GoToPIMPage();
-            BasePage.ClickAddButton();
+            GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.PIMButtonName);
+            GenericPages.PIMPage.ClickAddButton();
             GenericPages.PIMPage.EnterFullUserName();
-            BasePage.ClickSaveButton();
-            ClassicAssert.AreEqual("Successfully Saved", GenericPages.InfoMessage.ReturnInfoMessageTextResult());
-            BasePage.ClickSaveButton();
-            GenericPages.PIMPage.ClickEmployeeListButton();
+            GenericPages.PIMPage.ClickSaveButton();
+            ClassicAssert.AreEqual(InfoMessageTextValues.SuccessfullySavedMessageText, GenericPages.InfoMessage.GetInfoMessageTextResult());
+            GenericPages.PIMPage.ClickSaveButton();
+            GenericPages.BasePage.TopBarMenu.ClickTopbarMenuButtonByName(PIMPageTopBarMenuButtonsNames.EmployeeListTopBarMenuButtonName);
         }
 
         public void CreateUser()
         {
-            GenericPages.AdminPage.ClickUserRoleDropdownArrowButton();
-            GenericPages.AdminPage.ChooseUserRole();
-            GenericPages.AdminPage.ClickStatusDropdownArrowButton();
-            GenericPages.AdminPage.ChooseUserStatus();
-            GenericPages.PIMPage.EnterCreatedEmployeeNameTextBoxElement();
+            const string NewUserName = "111admin";
+            const string NewPassword = "qwerty123";
+            const string NewUserRole = "Admin";
+            const string NewUserStatus = "Enabled";
+            const string NewEmployeeName = "111 222";
+
+            GenericPages.AdminPage.ClickDropDownListArrowButtonByName(DropDownFieldsNames.UserRoleDropDownFieldName);
+            MyWebElement.SelectValueFromOrangeDropdownList(NewUserRole);
+            GenericPages.AdminPage.ClickDropDownListArrowButtonByName(DropDownFieldsNames.StatusDropDownFieldName);
+            MyWebElement.SelectValueFromOrangeDropdownList(NewUserStatus);
+            GenericPages.PIMPage.EnterValueInInputTextField(InputFieldsNames.EmployeeNameInputFieldName, NewEmployeeName);
             GenericPages.PIMPage.ClickDropdownListFirstPosition();
-            GenericPages.AdminPage.EnterUserNameTextBoxElement();
-            GenericPages.AdminPage.EnterPasswordTextBoxElement();
-            GenericPages.AdminPage.EnterConfirmPasswordTextBoxElement();
-            BasePage.ClickSaveButton();
+            GenericPages.AdminPage.EnterValueInInputTextField(InputFieldsNames.UserNameInputFieldName, NewUserName);
+            GenericPages.AdminPage.EnterValueInInputTextField(InputFieldsNames.PasswordInputFieldName, NewPassword);
+            GenericPages.AdminPage.EnterValueInInputTextField(InputFieldsNames.ConfirmPasswordInputFieldName, NewPassword);
+            GenericPages.AdminPage.ClickSaveButton();
         }
 
         public void DeleteCreatedEmployee()
         {
-            GenericPages.BasePage.LeftMenuNavigationPanel.GoToPIMPage();
-            BasePage.EnterEmployeeName();
+            const string CreatedEmployeeName = "111 222";
+
+            GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.PIMButtonName);
+            GenericPages.PIMPage.EnterValueInInputTextField(InputFieldsNames.EmployeeNameInputFieldName, CreatedEmployeeName); ;
             GenericPages.PIMPage.ClickDropdownListFirstPosition();
-            BasePage.ClickSearchButton();
-            BasePage.ClickTrashButton();
-            BasePage.ClickConfirmDeletionButton();
+            GenericPages.PIMPage.ClickSearchButton();
+            Table.ClickTrashButton();
+            GenericPages.PIMPage.ClickConfirmDeletionButton();
         }
 
         public void GoToLoginPage() => WebDriverFactory.Driver.Navigate().GoToUrl(TestSettings.PageUrl);

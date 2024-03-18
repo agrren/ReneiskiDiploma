@@ -9,6 +9,14 @@ namespace OrangeHRMTests.Common.WebElements
 {
     public class MyWebElement : IWebElement
     {
+        public static string OrangeDropDownList = "//*[contains(@class, 'select-wrapper')]/div[2]//*[contains(text(),'{0}')]";
+
+        public static void SelectValueFromOrangeDropdownList(string value) => new MyWebElement(By.XPath(string.Format(OrangeDropDownList, value))).Click();
+        //{
+        //    var element = new MyWebElement(By.XPath(string.Format(OrangeDropDownList, value)));
+        //    element.Click();
+        //}
+
         protected By By { get; set; }
 
         protected IWebElement WebElement => WebDriverFactory.Driver.GetWebElementWhenExist(By);
@@ -17,7 +25,7 @@ namespace OrangeHRMTests.Common.WebElements
 
         public string Text
         {
-            set { Waiter(); }
+            set { WaitForInvisibilityOfElement(); }
             get { return WebElement.Text; }
         }
 
@@ -38,13 +46,13 @@ namespace OrangeHRMTests.Common.WebElements
 
         public void Clear()
         {
-            Waiter();
+            WaitForInvisibilityOfElement();
             WebElement.Clear();
         }
 
         public void SendKeys(string text)
         {
-            Waiter();
+            WaitForInvisibilityOfElement();
             WebElement.SendKeys(text);
         }
 
@@ -54,13 +62,13 @@ namespace OrangeHRMTests.Common.WebElements
         {
             try
             {
-                Waiter();
+                WaitForInvisibilityOfElement();
                 WebElement.Click();
             }
             catch (ElementClickInterceptedException)
             {
                 ScrollIntoView();
-                Waiter();
+                WaitForInvisibilityOfElement();
                 WebElement.Click();
             }
         }
@@ -96,8 +104,8 @@ namespace OrangeHRMTests.Common.WebElements
 
         public string GetValueOfClassAtrubute() => GetAttribute("class");
 
-        public static WebDriverWait wait = new WebDriverWait(WebDriverFactory.Driver, TimeSpan.FromMilliseconds(15000));
+        //public static WebDriverWait wait = new WebDriverWait(WebDriverFactory.Driver, TimeSpan.FromMilliseconds(15000));
 
-        public static void Waiter() => wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='oxd-form-loader']")));
+        public static void WaitForInvisibilityOfElement() => WebDriverFactory.Driver.GetWebDriverWait().Until(SeleniumExtras.WaitHelpers.ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='oxd-form-loader']")));
     }
 }

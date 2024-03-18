@@ -7,6 +7,6 @@ namespace OrangeHRMTests.PageObjects.Popups
     {
         private MyWebElement InfoMessageText = new MyWebElement(By.XPath("//*[contains(@class, 'toast-container')]//*[contains(@class, 'toast-message')]"));
 
-        public string ReturnInfoMessageTextResult() => InfoMessageText.Text;
+        public string GetInfoMessageTextResult() => InfoMessageText.Text;
     }
 }

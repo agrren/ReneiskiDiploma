@@ -3,7 +3,6 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using OrangeHRMTests.Data;
 using OrangeHRMTests.Data.Enums;
 using System.Collections.Concurrent;
@@ -28,9 +27,10 @@ namespace OrangeHRMTests.Common.Drivers
 
             set => DriverCollection.TryAdd(TestContextValues.ExecutableClassName, value);
         }
+
         public static Actions Actions => new Actions(Driver);
 
-        public static SelectElement SelectElement => new SelectElement((IWebElement)Driver);
+        //public static SelectElement SelectElement => new SelectElement((IWebElement)Driver);
 
         public static IJavaScriptExecutor JavaScriptExecutor => (IJavaScriptExecutor)Driver;
 
