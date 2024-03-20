@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using NUnit.Allure.Core;
+using NUnit.Framework;
 using NUnit.Framework.Legacy;
 using OpenQA.Selenium;
 using OrangeHRMTests.Common.WebElements;
@@ -9,6 +10,8 @@ using OrangeHRMTests.PageObjects.Modules;
 
 namespace OrangeHRMTests.Tests
 {
+    [TestFixture]
+    [AllureNUnit]
     public class DemoQATests : BaseTest
     {
         [Test]
