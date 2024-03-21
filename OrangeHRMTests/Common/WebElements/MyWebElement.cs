@@ -104,8 +104,6 @@ namespace OrangeHRMTests.Common.WebElements
 
         public string GetValueOfClassAtrubute() => GetAttribute("class");
 
-        //public static WebDriverWait wait = new WebDriverWait(WebDriverFactory.Driver, TimeSpan.FromMilliseconds(15000));
-
         public static void WaitForInvisibilityOfElement() => WebDriverFactory.Driver.GetWebDriverWait().Until(SeleniumExtras.WaitHelpers.ExpectedConditions.InvisibilityOfElementLocated(By.XPath("//div[@class='oxd-form-loader']")));
     }
 }

@@ -30,8 +30,6 @@ namespace OrangeHRMTests.Common.Drivers
 
         public static Actions Actions => new Actions(Driver);
 
-        //public static SelectElement SelectElement => new SelectElement((IWebElement)Driver);
-
         public static IJavaScriptExecutor JavaScriptExecutor => (IJavaScriptExecutor)Driver;
 
         public static void QuitDriver() => Driver.Quit();

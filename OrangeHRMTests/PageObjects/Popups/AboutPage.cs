@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OrangeHRMTests.Common.WebElements;
-using OrangeHRMTests.PageObjects.Modules;
 
 namespace OrangeHRMTests.PageObjects.Popups
 {

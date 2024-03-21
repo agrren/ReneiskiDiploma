@@ -20,7 +20,7 @@ namespace OrangeHRMTests.Tests
             GenericPages.BasePage.TopBarMenu.ClickArrowButton();
             GenericPages.BasePage.TopBarMenu.ClickUserDropdownItemByName(TopBarUserDropDownButtons.AboutButton);
 
-            ClassicAssert.AreEqual("About", GenericPages.AboutPage.GetAboutNameTextResult());
+            ClassicAssert.AreEqual("Abou", GenericPages.AboutPage.GetAboutNameTextResult());
             ClassicAssert.AreEqual(AboutPageTextValues.OrangeHRMOSVersionText, GenericPages.AboutPage.GetAboutVersionTextResult());
 
             GenericPages.AboutPage.ClickCloseAboutButton();

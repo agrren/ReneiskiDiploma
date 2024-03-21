@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using NUnit.Framework.Legacy;
-using OpenQA.Selenium;
 using OrangeHRMTests.Common.Drivers;
 using OrangeHRMTests.Common.WebElements;
 using OrangeHRMTests.Data;

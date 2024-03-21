@@ -1,5 +1,6 @@
-﻿using OpenQA.Selenium;
-using System.Drawing.Imaging;
+﻿using Allure.Net.Commons;
+using NUnit.Framework;
+using OpenQA.Selenium;
 
 namespace OrangeHRMTests.Helpers
 {
@@ -22,6 +23,10 @@ namespace OrangeHRMTests.Helpers
             var screenshotFilePath = Path.Combine(screenshotsDirectory, fileNameBase);
 
             screenshot.SaveAsFile(screenshotFilePath);
+
+            TestContext.AddTestAttachment(screenshotFilePath);
+
+            AllureLifecycle.Instance.AddAttachment(TestContext.CurrentContext.Test.Name, "image/png", screenshotFilePath);
 
             return screenshotFilePath;
         }
