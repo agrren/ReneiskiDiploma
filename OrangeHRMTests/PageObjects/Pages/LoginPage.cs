@@ -11,7 +11,6 @@ namespace OrangeHRMTests.PageObjects.Pages
         private MyWebElement PassWordField = new MyWebElement(By.XPath("//*[contains(@class, 'form-row')]//*[contains(@name, 'password')]"));
         private MyWebElement InvalidMessageTextElement = new MyWebElement(By.XPath("//*[contains(@class, 'login-error')]//*[contains(@class, 'alert-content-text')]"));
         private MyWebElement ForgotPasswordButton = new MyWebElement(By.XPath("//*[contains(@class, 'login-forgot')]/p"));
-        private MyWebElement ResetPasswordMessageTextElement = new MyWebElement(By.XPath("//*[contains(@class, 'forgot-password-title')]"));
 
         public string GetCurrentPageUrl() => WebDriverFactory.Driver.Url;
 
@@ -23,11 +22,7 @@ namespace OrangeHRMTests.PageObjects.Pages
 
         public void ClickForgotPassword() => ForgotPasswordButton.Click();
 
-        public void ClickResetPasswordButton() => ClickSaveButton();
-
         public string GetInvalidMessageTextResult() => InvalidMessageTextElement.Text;
-
-        public string GetResetPasswordMessageTextResult() => ResetPasswordMessageTextElement.Text;
 
         public void LogInToOrangeCRM()
         {

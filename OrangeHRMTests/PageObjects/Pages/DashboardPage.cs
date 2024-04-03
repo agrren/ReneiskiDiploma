@@ -5,7 +5,7 @@ namespace OrangeHRMTests.PageObjects.Pages
 {
     public class DashboardPage : BasePage
     {
-        public const string HeaderByName = "//*[contains(@class, 'dashboard-widget')]//*[contains(@class, 'widget-name')]/p[text()='{0}']";
+        private const string HeaderByName = "//*[contains(@class, 'dashboard-widget')]//*[contains(@class, 'widget-name')]/p[text()='{0}']";
 
         private MyWebElement GearwheelButton = new MyWebElement(By.XPath("//*[contains(@class, 'gear')]"));
         private MyWebElement ConfigurationsTextElement = new MyWebElement(By.XPath("//*[contains(@class, 'dialog-modal')]//*[contains(@class, 'card-title')]"));

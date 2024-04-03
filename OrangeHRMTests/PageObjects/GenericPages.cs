@@ -1,5 +1,4 @@
-﻿using OrangeHRMTests.PageObjects.Modules;
-using OrangeHRMTests.PageObjects.Pages;
+﻿using OrangeHRMTests.PageObjects.Pages;
 using OrangeHRMTests.PageObjects.Popups;
 using OrangeHRMTests.Tests;
 
@@ -19,6 +18,7 @@ namespace OrangeHRMTests.PageObjects
         public static RecruitmentPage RecruitmentPage => GetPage<RecruitmentPage>();
         public static InfoMessage InfoMessage => GetPage<InfoMessage>();
         public static LeavePage LeavePage => GetPage<LeavePage>();
+        public static ResetPasswordPage ResetPasswordPage => GetPage<ResetPasswordPage>();
 
         private static T GetPage<T>() where T : new() => new T();
     }

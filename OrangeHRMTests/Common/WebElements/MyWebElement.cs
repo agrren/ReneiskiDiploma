@@ -3,7 +3,6 @@ using OrangeHRMTests.Common.Drivers;
 using OrangeHRMTests.Common.Extensions;
 using System.Collections.ObjectModel;
 using System.Drawing;
-using OpenQA.Selenium.Support.UI;
 
 namespace OrangeHRMTests.Common.WebElements
 {
@@ -12,10 +11,6 @@ namespace OrangeHRMTests.Common.WebElements
         public static string OrangeDropDownList = "//*[contains(@class, 'select-wrapper')]/div[2]//*[contains(text(),'{0}')]";
 
         public static void SelectValueFromOrangeDropdownList(string value) => new MyWebElement(By.XPath(string.Format(OrangeDropDownList, value))).Click();
-        //{
-        //    var element = new MyWebElement(By.XPath(string.Format(OrangeDropDownList, value)));
-        //    element.Click();
-        //}
 
         protected By By { get; set; }
 
@@ -55,6 +50,8 @@ namespace OrangeHRMTests.Common.WebElements
             WaitForInvisibilityOfElement();
             WebElement.SendKeys(text);
         }
+
+        public void SendIntKeys(int value) => WebElement.SendKeys(Convert.ToString(value));
 
         public void Submit() => WebElement.Submit();
 

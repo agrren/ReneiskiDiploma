@@ -2,13 +2,11 @@
 using NUnit.Framework;
 using OrangeHRMTests.Common.Drivers;
 using OrangeHRMTests.Data;
-using OrangeHRMTests.Data.Constants;
 using OrangeHRMTests.Helpers;
-using OrangeHRMTests.PageObjects;
 
 namespace OrangeHRMTests.Tests
 {
-    public class BaseTest
+    public class BaseLoginTest
     {
         public static Faker dataFaker => new Faker();
 
@@ -16,15 +14,12 @@ namespace OrangeHRMTests.Tests
         public void OneTimeSetUp()
         {
             WebDriverFactory.InitializeDriver();
-            GoToLoginPage();
-            GenericPages.LoginPage.LogInToOrangeCRM();
         }
 
         [SetUp]
         public void SetUp()
         {
-            WebDriverFactory.Driver.Navigate().Refresh();
-            GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.DashboardButtonName);
+            GoToLoginPage();
         }
 
         [TearDown]
