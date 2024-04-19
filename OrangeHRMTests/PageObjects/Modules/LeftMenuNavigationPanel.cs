@@ -6,10 +6,10 @@ namespace OrangeHRMTests.PageObjects.Modules
 {
     public class LeftMenuNavigationPanel
     {
+        private const string LeftMenuItem = "//*[contains(@class, 'main-menu-item')]/*[text()='{0}']";
+
         private MyWebElement SearchInputField = new MyWebElement(By.XPath("//*[contains(@placeholder, 'Search')]"));
         private MyWebElement SearchResultElement = new MyWebElement(By.XPath("//*[contains(@class, 'main-menu-item--name')]"));
-
-        private const string LeftMenuItem = "//*[contains(@class, 'main-menu-item')]/*[text()='{0}']";
 
         public void GoToLeftMenuItem(string value) => new MyWebElement(By.XPath(string.Format(LeftMenuItem, value))).Click();
 

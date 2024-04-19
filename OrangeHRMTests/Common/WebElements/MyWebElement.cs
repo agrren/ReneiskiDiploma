@@ -8,10 +8,6 @@ namespace OrangeHRMTests.Common.WebElements
 {
     public class MyWebElement : IWebElement
     {
-        public static string OrangeDropDownList = "//*[contains(@class, 'select-wrapper')]/div[2]//*[contains(text(),'{0}')]";
-
-        public static void SelectValueFromOrangeDropdownList(string value) => new MyWebElement(By.XPath(string.Format(OrangeDropDownList, value))).Click();
-
         protected By By { get; set; }
 
         protected IWebElement WebElement => WebDriverFactory.Driver.GetWebElementWhenExist(By);

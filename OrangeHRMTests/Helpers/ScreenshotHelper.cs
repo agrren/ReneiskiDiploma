@@ -26,7 +26,7 @@ namespace OrangeHRMTests.Helpers
 
             TestContext.AddTestAttachment(screenshotFilePath);
 
-            AllureLifecycle.Instance.AddAttachment(TestContext.CurrentContext.Test.Name, "image/png", screenshotFilePath);
+            AllureApi.AddAttachment(TestContext.CurrentContext.Test.Name, "image/png", screenshotFilePath);
 
             return screenshotFilePath;
         }

@@ -9,52 +9,17 @@ namespace OrangeHRMTests.Tests
 {
     [TestFixture]
     [AllureNUnit]
-    public class OrangeHRMTests : BaseTest
+    public class OrangeHRMTests : BaseOrangeHrmTest
     {
-        public void CreateEmployee(string newFirstName, string newMiddleName, string newLastName)
-        {
-            GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.PIMButtonName);
-            GenericPages.PIMPage.ClickAddButton();
-            GenericPages.PIMPage.EnterFullUserName(newFirstName, newMiddleName, newLastName);
-            GenericPages.PIMPage.ClickSaveButton();
-            ClassicAssert.AreEqual(InfoMessageTextValues.SuccessfullySavedMessageText, GenericPages.InfoMessage.GetInfoMessageTextResult());
-            GenericPages.PIMPage.ClickSaveButton();
-            GenericPages.PIMPage.TopBarMenu.ClickTopbarMenuButtonByName(PIMPageTopBarMenuButtonsNames.EmployeeListTopBarMenuButtonName);
-        }
-
-        public void CreateUser(string newUserName, string newPassword, string newEmployeeName)
-        {
-            const string NewUserRole = "Admin";
-            const string NewUserStatus = "Enabled";
-
-            GenericPages.AdminPage.ChooseValueFromDropDownByName(DropDownFieldsNames.UserRoleDropDownFieldName, NewUserRole);
-            GenericPages.AdminPage.ChooseValueFromDropDownByName(DropDownFieldsNames.StatusDropDownFieldName, NewUserStatus);
-            GenericPages.AdminPage.EnterValueInInputTextField(InputFieldsNames.EmployeeNameInputFieldName, newEmployeeName);
-            GenericPages.AdminPage.ClickDropdownListFirstPosition();
-            GenericPages.AdminPage.EnterValueInInputTextField(InputFieldsNames.UserNameInputFieldName, newUserName);
-            GenericPages.AdminPage.EnterValueInInputTextField(InputFieldsNames.PasswordInputFieldName, newPassword);
-            GenericPages.AdminPage.EnterValueInInputTextField(InputFieldsNames.ConfirmPasswordInputFieldName, newPassword);
-            GenericPages.AdminPage.ClickSaveButton();
-        }
-
-        public void DeleteCreatedEmployee(string newFirstName)
-        {
-            GenericPages.AdminPage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.PIMButtonName);
-            GenericPages.PIMPage.EnterValueInInputTextField(InputFieldsNames.EmployeeNameInputFieldName, newFirstName); ;
-            GenericPages.PIMPage.ClickDropdownListFirstPosition();
-            GenericPages.PIMPage.ClickSearchButton();
-            GenericPages.PIMPage.Table.ClickTrashButton();
-            GenericPages.PIMPage.ClickConfirmDeletionButton();
-        }
 
         [Test]
         public void A_AdminPageSearchFunctionality()
         {
             GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.AdminButtonName);
 
-            var username = GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.UserNameTableColumnName);
+            var userName = GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.UserNameTableColumnName);
             var userRole = GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.UserRoleTableColumnName);
-            var employeename = GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.EmployeeNameTableColumnName);
+            var employeeName = GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.EmployeeNameTableColumnName);
             var userStatus = GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.StatusTableColumnName);
 
             ClassicAssert.AreEqual(AdminPageHeadersTextValues.AdminUserManagementHeaderTextValue, GenericPages.AdminPage.TopBarMenu.GetAdminPageHeaderTextResult());
@@ -66,18 +31,18 @@ namespace OrangeHRMTests.Tests
             GenericPages.AdminPage.ChooseValueFromDropDownByName(DropDownFieldsNames.StatusDropDownFieldName, GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.StatusTableColumnName));
             GenericPages.AdminPage.ClickSearchButton();
 
-            ClassicAssert.AreEqual(username, GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.UserNameTableColumnName));
+            ClassicAssert.AreEqual(userName, GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.UserNameTableColumnName));
             ClassicAssert.AreEqual(userRole, GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.UserRoleTableColumnName));
-            ClassicAssert.AreEqual(employeename, GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.EmployeeNameTableColumnName));
+            ClassicAssert.AreEqual(employeeName, GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.EmployeeNameTableColumnName));
             ClassicAssert.AreEqual(userStatus, GenericPages.AdminPage.Table.GetCellText(TableColumnsNames.StatusTableColumnName));
         }
 
         [Test]
         public void B_PIMPageAddEmployeeFunctionality()
         {
-            string newFirstName = dataFaker.Person.FirstName;
-            string newMiddleName = dataFaker.Person.FirstName;
-            string newLastName = dataFaker.Person.LastName;
+            var newFirstName = dataFaker.Person.FirstName;
+            var newMiddleName = dataFaker.Person.FirstName;
+            var newLastName = dataFaker.Person.LastName;
 
             GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.PIMButtonName);
 
@@ -92,7 +57,7 @@ namespace OrangeHRMTests.Tests
             GenericPages.PIMPage.EnterValueInInputTextField(InputFieldsNames.EmployeeNameInputFieldName, newFirstName + " " + newMiddleName);
             GenericPages.PIMPage.ClickSearchButton();
 
-            ClassicAssert.AreEqual(newFirstName + " " + newMiddleName, GenericPages.PIMPage.Table.GetCellText(TableColumnsNames.FirstMiddleNameTableColumnName));
+            ClassicAssert.AreEqual(string.Join(" ", newFirstName, newMiddleName), GenericPages.PIMPage.Table.GetCellText(TableColumnsNames.FirstMiddleNameTableColumnName));
             ClassicAssert.AreEqual(newLastName, GenericPages.PIMPage.Table.GetCellText(TableColumnsNames.LastNameTableColumnName));
 
             DeleteCreatedEmployee(newFirstName);
@@ -114,9 +79,9 @@ namespace OrangeHRMTests.Tests
         [Test]
         public void D_PerformanceManagementAddKPIFunctionality()
         {
-            string newKPI = dataFaker.Random.AlphaNumeric(7);
-            string newMinimumRating = Convert.ToString(dataFaker.Random.Number(5));
-            string newJobTitle = dataFaker.Random.AlphaNumeric(5);
+            var newKPI = dataFaker.Random.AlphaNumeric(7);
+            var newMinimumRating = Convert.ToString(dataFaker.Random.Number(5));
+            var newJobTitle = dataFaker.Random.AlphaNumeric(5);
 
             GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.AdminButtonName);
 
@@ -152,7 +117,7 @@ namespace OrangeHRMTests.Tests
         [Test]
         public void E_AdminPageEditNationalityFunctionality()
         {
-            string newNationalityName = dataFaker.Random.AlphaNumeric(7);
+            var newNationalityName = dataFaker.Random.AlphaNumeric(7);
 
             GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.AdminButtonName);
 
@@ -189,9 +154,9 @@ namespace OrangeHRMTests.Tests
         [Test]
         public void F_RecruitmentPageAddVacancyFunctionality()
         {
-            string newVacancyName = dataFaker.Random.AlphaNumeric(7);
             const string NewHiringManagerName = "a";
             const string JobTitleITManager = "IT Manager";
+            var newVacancyName = dataFaker.Random.AlphaNumeric(7);
 
             GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.RecruitmentButtonName);
 
@@ -225,15 +190,15 @@ namespace OrangeHRMTests.Tests
         [Test]
         public void G_LeavePageAssignLeaveFunctionality()
         {
-            string newFirstName = dataFaker.Person.FirstName;
-            string newMiddleName = dataFaker.Person.FirstName;
-            string newLastName = dataFaker.Person.LastName;
             const string NewEntitlement = "10";
             const string ShowLeaveWithStatusDropDownFieldValue = "Show Leave with Status";
             const string CANVacationDropDownFieldValue = "CAN - Vacation";
             const string ScheduledDropDownFieldValue = "Scheduled";
             const string FromDateVacationValue = "29";
             const string ToDateVacationValue = "30";
+            var newFirstName = dataFaker.Person.FirstName;
+            var newMiddleName = dataFaker.Person.FirstName;
+            var newLastName = dataFaker.Person.LastName;
 
             CreateEmployee(newFirstName, newMiddleName, newLastName);
 
@@ -264,10 +229,8 @@ namespace OrangeHRMTests.Tests
             GenericPages.LeavePage.ClickDropDownListArrowButtonByName(DropDownFieldsNames.ToDateDropDownFieldName);
             GenericPages.LeavePage.ClickToDateCalendarValueButton(ToDateVacationValue);
             GenericPages.LeavePage.ClickSaveButton();
-            //Implementation of wait while element appears - was discussed
-            string GetSuccessfullySavedMessageTextResult() => GenericPages.BasePage.GetPopUpMessageTextElement();
 
-            ClassicAssert.AreEqual(InfoMessageTextValues.SuccessfullySavedMessageText, GetSuccessfullySavedMessageTextResult());
+            ClassicAssert.AreEqual(InfoMessageTextValues.SuccessfullySavedMessageText, GenericPages.LeavePage.GetPopUpMessageTextElement());
 
             GenericPages.BasePage.TopBarMenu.ClickTopbarMenuButtonByName(LeavePageTopBarMenuButtonsNames.LeaveListTopBarMenuButtonName);
             GenericPages.LeavePage.ClickDropDownListArrowButtonByName(ShowLeaveWithStatusDropDownFieldValue);
@@ -277,7 +240,7 @@ namespace OrangeHRMTests.Tests
             GenericPages.LeavePage.ClickDropdownListFirstPosition();
             GenericPages.LeavePage.ClickSearchButton();
 
-            ClassicAssert.AreEqual(newFirstName + " " + newMiddleName + " " + newLastName, GenericPages.LeavePage.Table.GetCellText(TableColumnsNames.EmployeeNameTableColumnName));
+            ClassicAssert.AreEqual(string.Join(" ", newFirstName, newMiddleName, newLastName), GenericPages.LeavePage.Table.GetCellText(TableColumnsNames.EmployeeNameTableColumnName));
 
             DeleteCreatedEmployee(newFirstName);
         }
@@ -285,7 +248,7 @@ namespace OrangeHRMTests.Tests
         [Test]
         public void H_AdminPageAddJobTitleFunctionality()
         {
-            string newJobTitleName = Convert.ToString(dataFaker.Random.Number(3));
+            var newJobTitleName = Convert.ToString(dataFaker.Random.Number(3));
 
             GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.AdminButtonName);
 
@@ -307,10 +270,10 @@ namespace OrangeHRMTests.Tests
         [Test]
         public void I_PIMPageSearchEmployeeFunctionality()
         {
-            string newFirstName = dataFaker.Person.FirstName;
-            string newMiddleName = dataFaker.Person.FirstName;
-            string newLastName = dataFaker.Person.LastName;
             const string UnvalidEmployeeName = "123456";
+            var newFirstName = dataFaker.Person.FirstName;
+            var newMiddleName = dataFaker.Person.FirstName;
+            var newLastName = dataFaker.Person.LastName;
 
             CreateEmployee(newFirstName, newMiddleName, newLastName);
 
@@ -320,7 +283,7 @@ namespace OrangeHRMTests.Tests
             GenericPages.PIMPage.ClickDropdownListFirstPosition();
             GenericPages.PIMPage.ClickSearchButton();
 
-            ClassicAssert.AreEqual(newFirstName + " " + newMiddleName, GenericPages.BasePage.Table.GetCellText("First (& Middle) Name"));
+            ClassicAssert.AreEqual(string.Join(" ", newFirstName, newMiddleName), GenericPages.BasePage.Table.GetCellText("First (& Middle) Name"));
 
             GenericPages.PIMPage.EnterValueInInputTextField(InputFieldsNames.EmployeeNameInputFieldName, Keys.Control + "a" + Keys.Delete);
             GenericPages.PIMPage.EnterValueInInputTextField(InputFieldsNames.EmployeeNameInputFieldName, UnvalidEmployeeName);
@@ -337,9 +300,9 @@ namespace OrangeHRMTests.Tests
         [Test]
         public void J_PIMPageEditEmployeeDetailsFunctionality()
         {
-            string newFirstName = dataFaker.Person.FirstName;
-            string newMiddleName = dataFaker.Person.FirstName;
-            string newLastName = dataFaker.Person.LastName;
+            var newFirstName = dataFaker.Person.FirstName;
+            var newMiddleName = dataFaker.Person.FirstName;
+            var newLastName = dataFaker.Person.LastName;
 
             GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.PIMButtonName);
 
@@ -359,7 +322,7 @@ namespace OrangeHRMTests.Tests
             GenericPages.PIMPage.ClickDropdownListFirstPosition();
             GenericPages.PIMPage.ClickSearchButton();
 
-            ClassicAssert.AreEqual(newFirstName + " " + newMiddleName, GenericPages.PIMPage.Table.GetCellText("First (& Middle) Name"));
+            ClassicAssert.AreEqual(string.Join(" ", newFirstName, newMiddleName), GenericPages.PIMPage.Table.GetCellText("First (& Middle) Name"));
             ClassicAssert.AreEqual(newLastName, GenericPages.PIMPage.Table.GetCellText(TableColumnsNames.LastNameTableColumnName));
 
             DeleteCreatedEmployee(newFirstName);
@@ -368,12 +331,12 @@ namespace OrangeHRMTests.Tests
         [Test]
         public void K_AdminPageSearchUserFunctionality()
         {
-            string newFirstName = dataFaker.Person.FirstName;
-            string newMiddleName = dataFaker.Person.FirstName;
-            string newLastName = dataFaker.Person.LastName;
-            string newUserName = dataFaker.Person.FirstName;
-            string newPassword = dataFaker.Internet.Password(12);
-            var newEmployeeName = newFirstName + " " + newMiddleName;
+            var newFirstName = dataFaker.Person.FirstName;
+            var newMiddleName = dataFaker.Person.FirstName;
+            var newLastName = dataFaker.Person.LastName;
+            var newUserName = dataFaker.Person.FirstName;
+            var newPassword = dataFaker.Internet.Password(12);
+            var newEmployeeName = string.Join(" ", newFirstName, newMiddleName);
 
             CreateEmployee(newFirstName, newMiddleName, newLastName);
 
@@ -390,7 +353,7 @@ namespace OrangeHRMTests.Tests
             GenericPages.AdminPage.ClickSearchButton();
             GenericPages.AdminPage.Table.GetValueOfTextFieldByName(TableColumnsNames.EmployeeNameTableColumnName);
 
-            ClassicAssert.AreEqual(newFirstName + " " + newLastName, GenericPages.AdminPage.Table.GetValueOfTextFieldByName(TableColumnsNames.EmployeeNameTableColumnName));
+            ClassicAssert.AreEqual(string.Join(" ", newFirstName, newLastName), GenericPages.AdminPage.Table.GetValueOfTextFieldByName(TableColumnsNames.EmployeeNameTableColumnName));
 
             GenericPages.AdminPage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.PIMButtonName);
             GenericPages.PIMPage.EnterValueInInputTextField(InputFieldsNames.EmployeeNameInputFieldName, newEmployeeName);
@@ -406,11 +369,10 @@ namespace OrangeHRMTests.Tests
         [Test]
         public void L_RecruitmentPageAddValidateCandidateFunctionality()
         {
-            string newFirstName = dataFaker.Person.FirstName;
-            string newMiddleName = dataFaker.Person.FirstName;
-            string newLastName = dataFaker.Person.LastName;
-            string newEmail = dataFaker.Person.Email;
-            var fullCandidateName = newFirstName + " " + newMiddleName + " " + newLastName;
+            var newFirstName = dataFaker.Person.FirstName;
+            var newMiddleName = dataFaker.Person.FirstName;
+            var newLastName = dataFaker.Person.LastName;
+            var newEmail = dataFaker.Person.Email;
 
             GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.RecruitmentButtonName);
 
@@ -425,7 +387,7 @@ namespace OrangeHRMTests.Tests
             GenericPages.RecruitmentPage.ClickDropdownListFirstPosition();
             GenericPages.RecruitmentPage.ClickSearchButton();
 
-            ClassicAssert.AreEqual(fullCandidateName, GenericPages.BasePage.Table.GetCellText("Candidate"));
+            ClassicAssert.AreEqual(string.Join(" ", newFirstName, newMiddleName, newLastName), GenericPages.BasePage.Table.GetCellText("Candidate"));
 
             GenericPages.RecruitmentPage.Table.CheckTableCheckBoxElement();
             GenericPages.RecruitmentPage.Table.ClickDeleteSelectedButton();
@@ -438,11 +400,11 @@ namespace OrangeHRMTests.Tests
         public void M_ResetPasswordFunctionality()
         {
 
-            string newFirstName = dataFaker.Person.FirstName;
-            string newMiddleName = dataFaker.Person.FirstName;
-            string newLastName = dataFaker.Person.LastName;
-            string newUserName = dataFaker.Person.FirstName;
-            string newPassword = dataFaker.Internet.Password(12);
+            var newFirstName = dataFaker.Person.FirstName;
+            var newMiddleName = dataFaker.Person.FirstName;
+            var newLastName = dataFaker.Person.LastName;
+            var newUserName = dataFaker.Person.FirstName;
+            var newPassword = dataFaker.Internet.Password(12);
             var newEmployeeName = newFirstName + " " + newMiddleName;
 
             CreateEmployee(newFirstName, newMiddleName, newLastName);
@@ -472,7 +434,7 @@ namespace OrangeHRMTests.Tests
         [Test]
         public void N_AdminPageAddValidateJobTitle()
         {
-            string newJobTitleName = Convert.ToString(dataFaker.Random.Number(7));
+            var newJobTitleName = Convert.ToString(dataFaker.Random.Number(7));
 
             GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.AdminButtonName);
 
@@ -495,10 +457,10 @@ namespace OrangeHRMTests.Tests
         [Test]
         public void O_AddCustomFieldToEmployeeProfileFunctionality()
         {
-            string newFieldName = Convert.ToString(dataFaker.Random.Number(7));
-            string newFieldValue = dataFaker.Random.AlphaNumeric(7);
             const string NewScreenDropDownValue = "Personal Details";
             const string NewTypeDropDownValue = "Text or Number";
+            var newFieldName = Convert.ToString(dataFaker.Random.Number(7));
+            var newFieldValue = dataFaker.Random.AlphaNumeric(7);
 
             GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.PIMButtonName);
 
@@ -556,6 +518,42 @@ namespace OrangeHRMTests.Tests
             ClassicAssert.AreEqual(NewSkillValue, GenericPages.PIMPage.Table.GetValueOfTextFieldByName(TableColumnsNames.SkillTableColumnName));
 
             GenericPages.PIMPage.ClickSkillsTableTrashButton();
+            GenericPages.PIMPage.ClickConfirmDeletionButton();
+        }
+
+        private void CreateEmployee(string newFirstName, string newMiddleName, string newLastName)
+        {
+            GenericPages.BasePage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.PIMButtonName);
+            GenericPages.PIMPage.ClickAddButton();
+            GenericPages.PIMPage.EnterFullUserName(newFirstName, newMiddleName, newLastName);
+            GenericPages.PIMPage.ClickSaveButton();
+            ClassicAssert.AreEqual(InfoMessageTextValues.SuccessfullySavedMessageText, GenericPages.InfoMessage.GetInfoMessageTextResult());
+            GenericPages.PIMPage.ClickSaveButton();
+            GenericPages.PIMPage.TopBarMenu.ClickTopbarMenuButtonByName(PIMPageTopBarMenuButtonsNames.EmployeeListTopBarMenuButtonName);
+        }
+
+        private void CreateUser(string newUserName, string newPassword, string newEmployeeName)
+        {
+            const string NewUserRole = "Admin";
+            const string NewUserStatus = "Enabled";
+
+            GenericPages.AdminPage.ChooseValueFromDropDownByName(DropDownFieldsNames.UserRoleDropDownFieldName, NewUserRole);
+            GenericPages.AdminPage.ChooseValueFromDropDownByName(DropDownFieldsNames.StatusDropDownFieldName, NewUserStatus);
+            GenericPages.AdminPage.EnterValueInInputTextField(InputFieldsNames.EmployeeNameInputFieldName, newEmployeeName);
+            GenericPages.AdminPage.ClickDropdownListFirstPosition();
+            GenericPages.AdminPage.EnterValueInInputTextField(InputFieldsNames.UserNameInputFieldName, newUserName);
+            GenericPages.AdminPage.EnterValueInInputTextField(InputFieldsNames.PasswordInputFieldName, newPassword);
+            GenericPages.AdminPage.EnterValueInInputTextField(InputFieldsNames.ConfirmPasswordInputFieldName, newPassword);
+            GenericPages.AdminPage.ClickSaveButton();
+        }
+
+        private void DeleteCreatedEmployee(string newFirstName)
+        {
+            GenericPages.AdminPage.LeftMenuNavigationPanel.GoToLeftMenuItem(LeftMenuNavigationPanelButtonsNames.PIMButtonName);
+            GenericPages.PIMPage.EnterValueInInputTextField(InputFieldsNames.EmployeeNameInputFieldName, newFirstName); ;
+            GenericPages.PIMPage.ClickDropdownListFirstPosition();
+            GenericPages.PIMPage.ClickSearchButton();
+            GenericPages.PIMPage.Table.ClickTrashButton();
             GenericPages.PIMPage.ClickConfirmDeletionButton();
         }
     }

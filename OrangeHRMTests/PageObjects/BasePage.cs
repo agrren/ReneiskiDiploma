@@ -6,10 +6,6 @@ namespace OrangeHRMTests.PageObjects
 {
     public class BasePage
     {
-        public LeftMenuNavigationPanel LeftMenuNavigationPanel => new LeftMenuNavigationPanel();
-        public TopBarMenu TopBarMenu => new TopBarMenu();
-        public Table Table => new Table();
-
         private const string DropDownListArrowButtonByName = "//*[contains(@class, 'wrapper')]/*[contains(text(), '{0}')]//ancestor::div[contains(@class, 'wrapper')]//following-sibling::div[1]//i";
         private const string XPathInputTextFieldByName = "//*[contains(@class, 'input-field')]//*[contains(text(), '{0}')]//ancestor::div[1]//following-sibling::div[1]//input";
 
@@ -20,6 +16,10 @@ namespace OrangeHRMTests.PageObjects
         private MyWebElement MainTitleText = new MyWebElement(By.XPath("//*[contains(@class, 'container')]//*[contains(@class, 'main-title')]"));
         private MyWebElement PopUpMessageTextElement = new MyWebElement(By.XPath("//*[contains(@class, 'toast-container')]//p[contains(@class, 'toast-message')]"));
         private MyWebElement DropdownListFirstPosition = new MyWebElement(By.XPath("//*[contains(@role, 'listbox')]//span"));
+
+        public LeftMenuNavigationPanel LeftMenuNavigationPanel => new LeftMenuNavigationPanel();
+        public TopBarMenu TopBarMenu => new TopBarMenu();
+        public Table Table => new Table();
 
         public void ClickDropDownListArrowButtonByName(string value) => new MyWebElement(By.XPath(string.Format(DropDownListArrowButtonByName, value))).Click();
 

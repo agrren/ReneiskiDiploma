@@ -32,7 +32,11 @@ namespace OrangeHRMTests.Common.Drivers
 
         public static IJavaScriptExecutor JavaScriptExecutor => (IJavaScriptExecutor)Driver;
 
-        public static void QuitDriver() => Driver.Quit();
+        public static void QuitDriver()
+        {
+            Driver.Quit();
+            DriverCollection.Remove(TestContextValues.ExecutableClassName, out _);
+        }
 
         public static void InitializeDriver()
         {

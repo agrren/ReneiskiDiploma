@@ -8,8 +8,8 @@ namespace OrangeHRMTests.Data
         public static Browsers Browser { get; set; }
         public static string Username { get; set; }
         public static string Password { get; set; }
-        public static string UnvalidUsername { get; set; }
-        public static string UnvalidPassword { get; set; }
+        public static string InValidUsername { get; set; }
+        public static string InValidPassword { get; set; }
         public static string PageUrl { get; set; }
         public static string DashboardPageUrl { get; set; }
 
@@ -21,8 +21,8 @@ namespace OrangeHRMTests.Data
             Browser = browser;
             Username = TestConfiguration["LogIn:username"];
             Password = TestConfiguration["LogIn:password"];
-            UnvalidUsername = TestConfiguration["LogIn:wusername"];
-            UnvalidPassword = TestConfiguration["LogIn:wpassword"];
+            InValidUsername = TestConfiguration["LogIn:wusername"];
+            InValidPassword = TestConfiguration["LogIn:wpassword"];
             PageUrl = TestConfiguration["Common:Urls:Page"];
             DashboardPageUrl = TestConfiguration["Common:Urls:DashboardPageUrl"];
         }

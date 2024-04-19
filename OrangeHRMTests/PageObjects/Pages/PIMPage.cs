@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OrangeHRMTests.Common.WebElements;
-using OrangeHRMTests.Data;
 using OrangeHRMTests.Data.Constants;
 
 namespace OrangeHRMTests.PageObjects.Pages

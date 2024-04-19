@@ -8,7 +8,7 @@ namespace OrangeHRMTests.Tests
 {
     [TestFixture]
     [AllureNUnit]
-    public class UITests : BaseTest
+    public class UITests : BaseOrangeHrmTest
     {
         [Test]
         public void A_VerifyAboutPopupPropertiesValues()

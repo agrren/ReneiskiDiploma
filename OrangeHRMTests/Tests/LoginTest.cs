@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework.Legacy;
 using NUnit.Framework;
-using OrangeHRMTests.Data.Constants;
 using OrangeHRMTests.Data;
 using OrangeHRMTests.PageObjects;
 using NUnit.Allure.Core;
@@ -19,16 +18,13 @@ namespace OrangeHRMTests.Tests
             GenericPages.LoginPage.ClickLoginButton();
 
             ClassicAssert.AreEqual(Data.TestSettings.DashboardPageUrl, GenericPages.LoginPage.GetCurrentPageUrl());
-
-            GenericPages.BasePage.TopBarMenu.ClickArrowButton();
-            GenericPages.BasePage.TopBarMenu.ClickUserDropdownItemByName(TopBarUserDropDownButtons.LogoutButton);
         }
 
         [Test]
         public void B_InValidLoginTest()
         {
-            GenericPages.LoginPage.InputUserName(TestSettings.UnvalidUsername);
-            GenericPages.LoginPage.InputPassword(TestSettings.UnvalidPassword);
+            GenericPages.LoginPage.InputUserName(TestSettings.InValidUsername);
+            GenericPages.LoginPage.InputPassword(TestSettings.InValidPassword);
             GenericPages.LoginPage.ClickLoginButton();
 
             ClassicAssert.AreEqual("Invalid credentials", GenericPages.LoginPage.GetInvalidMessageTextResult());
